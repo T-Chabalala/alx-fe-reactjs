@@ -1,3 +1,8 @@
+import UserProfile from './UserProfile';
+import React from 'react';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import MainContent from './components/MainContent';
 import Header from './Header';
 import MainContent from './MainContent';
 import Footer from './Footer';
@@ -17,6 +22,7 @@ function App() {
         <Header />
         <MainContent />
         <Footer />
+        <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
       </div>
       <div className="logo-container">
         <a href="https://vite.dev" target="_blank">
