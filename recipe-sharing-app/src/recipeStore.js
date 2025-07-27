@@ -1,3 +1,4 @@
+// src/store/recipeStore.js
 import { create } from 'zustand';
 
 const useRecipeStore = create((set) => ({
@@ -8,7 +9,7 @@ const useRecipeStore = create((set) => ({
     })),
   setRecipes: (recipes) => set({ recipes }),
 
-  // Initialize with starter data
+  // Optional: preload default recipes on app load
   initializeRecipes: () =>
     set({
       recipes: [
