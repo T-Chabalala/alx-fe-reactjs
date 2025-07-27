@@ -1,8 +1,11 @@
 import { create } from 'zustand'
 
+
 type Recipe = {
+
   // Define the properties of a recipe, for example:
   id: string;
+  
   title: string;
   // Add other properties as needed
 };
