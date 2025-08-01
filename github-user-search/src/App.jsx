@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UserSearch from './components/UserSearch';
+import Search from './components/Search';
 import { fetchUserData } from './services/githubService';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch {
-      setError('Looks like we can’t find the user');
+      setError("Looks like we can't find the user");
     } finally {
       setLoading(false);
     }
@@ -25,7 +25,7 @@ function App() {
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
       <h1>GitHub User Search</h1>
-      <UserSearch onSearch={handleSearch} />
+      <Search onSearch={handleSearch} />
 
       {loading && <p>Loading...</p>}
 
