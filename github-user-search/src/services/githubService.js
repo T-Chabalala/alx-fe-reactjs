@@ -1,21 +1,20 @@
 import axios from 'axios';
 
+// Optional: Read token from .env if you added one
 const token = import.meta.env.VITE_APP_GITHUB_API_KEY;
 
 const headers = token
   ? { Authorization: `token ${token}` }
   : {};
 
-export const fetchGitHubUser = async (username) => {
+export const fetchUserData = async (username) => {
   try {
-    const response = await axios.get(
-        
-      `https://github.com/T-Chabalala/alx-fe-reactjs.git{username}`,
-      { headers }
-    );
+    const response = await axios.get(`https://api.github.com/users/${username}`, {
+      headers,
+    });
     return response.data;
   } catch (error) {
-    console.error('Error fetching GitHub user:', error);
-      throw error;
-    }
-  };
+    console.error('GitHub API error:', error);
+    throw error;
+  }
+};
