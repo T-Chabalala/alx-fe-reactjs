@@ -6,7 +6,6 @@ const AddRecipeForm = () => {
   const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
 
-  // Step 2: Validation logic
   const validateForm = () => {
     let formErrors = {};
     if (!title.trim()) formErrors.title = "Title is required.";
@@ -29,8 +28,6 @@ const AddRecipeForm = () => {
         steps,
       };
       console.log("Recipe Submitted:", newRecipe);
-
-      // Reset form
       setTitle("");
       setIngredients("");
       setSteps("");
@@ -43,9 +40,11 @@ const AddRecipeForm = () => {
     <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg"
+        className="bg-white p-8 rounded-xl shadow-lg w-full md:w-2/3 lg:w-1/2"
       >
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Add New Recipe</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">
+          Add New Recipe
+        </h2>
 
         {/* Title */}
         <div className="mb-4">
@@ -66,7 +65,9 @@ const AddRecipeForm = () => {
 
         {/* Ingredients */}
         <div className="mb-4">
-          <label className="block font-medium mb-2">Ingredients (comma separated)</label>
+          <label className="block font-medium mb-2">
+            Ingredients (comma separated)
+          </label>
           <textarea
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
