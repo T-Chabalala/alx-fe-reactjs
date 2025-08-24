@@ -5,7 +5,7 @@ import ProfileSettings from "./ProfileSettings";
 const Profile = () => {
   return (
     <div>
-      <h1>Profile</h1>
+      <h1> Profile</h1>
       <nav>
         <Link to="details">Details</Link> |{" "}
         <Link to="settings">Settings</Link>
