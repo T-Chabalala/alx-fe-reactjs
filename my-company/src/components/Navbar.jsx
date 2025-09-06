@@ -1,20 +1,15 @@
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+function Navbar() {
   const navStyle = {
     display: 'flex',
-    gap: '1rem',
-    background: '#333',
-    color: 'white',
-    padding: '1rem',
-    justifyContent: 'center'
+    justifyContent: 'space-around',
+    padding: '10px',
+    borderBottom: '2px solid #000', // visually separates navbar without backgroundColor
+    color: '#000'
   };
 
-  const linkStyle = {
-    color: 'white',
-    textDecoration: 'none',
-    fontWeight: 'bold',
-  };
+  const linkStyle = { color: '#000', textDecoration: 'none', fontWeight: 'bold' };
 
   return (
     <nav style={navStyle}>
@@ -24,6 +19,6 @@ const Navbar = () => {
       <Link to="/contact" style={linkStyle}>Contact</Link>
     </nav>
   );
-};
+}
 
 export default Navbar;
