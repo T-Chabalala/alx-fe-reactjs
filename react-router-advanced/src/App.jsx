@@ -1,24 +1,28 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Profile from "./pages/Profile";
 import BlogPost from "./pages/BlogPost";
-import Login from "./pages/Login";
-import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <Router>
+    <div className="p-6">
+      <nav className="space-x-4">
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/profile">Profile</Link>
+        <Link to="/posts/1">Blog Post (id=1)</Link>
+      </nav>
+
+      <hr className="my-4" />
+
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
 
-        {/* Dynamic Route for Blog Posts */}
-        <Route path="/blog/:postId" element={<BlogPost />} />
-
-        {/* Protected + Nested Routes */}
+        {/* Protected Route wrapping Profile */}
         <Route
           path="/profile/*"
           element={
@@ -27,11 +31,11 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
-        {/* Fallback Route */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+
+        {/* Dynamic route for blog posts */}
+        <Route path="/posts/:id" element={<BlogPost />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 
