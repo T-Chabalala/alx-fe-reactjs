@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Profile from "./pages/Profile";
-import BlogPost from "./pages/BlogPost";
+import Profile from "./components/Profile";
+import BlogPost from "./components/BlogPost";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/profile">Profile</Link>
-          <Link to="/posts/1">Blog Post (id=1)</Link>
+          <Link to="/blog/1">Blog Post (id=1)</Link>
         </nav>
 
         <hr className="my-4" />
@@ -38,8 +38,8 @@ function App() {
             }
           />
 
-          {/* Dynamic route for blog posts */}
-          <Route path="/posts/:id" element={<BlogPost />} />
+          {/* ✅ Dynamic route updated */}
+          <Route path="/blog/:id" element={<BlogPost />} />
         </Routes>
       </div>
     </BrowserRouter>
