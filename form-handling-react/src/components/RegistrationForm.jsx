@@ -1,80 +1,81 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const RegistrationForm = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({}); // plural
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = (e) => {
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let newErrors = {};
 
-    if (!username) {
-      newErrors.username = "Username is required";
-    }
-    if (!email) {
-      newErrors.email = "Email is required";
-    }
-    if (!password) {
-      newErrors.password = "Password is required";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    // Basic validation
+    if (!formData.username || !formData.email || !formData.password) {
+      setError("All fields are required!");
       return;
     }
 
-    setErrors({});
-    console.log("Form Submitted:", { username, email, password });
+    setError("");
 
     // Simulate API call
-    fetch("https://jsonplaceholder.typicode.com/users", {
-      method: "POST",
-      body: JSON.stringify({ username, email, password }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Mock API Response:", data);
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      const data = await response.json();
+      console.log("User registered:", data);
+      alert("User registered successfully!");
+    } catch (err) {
+      console.error("Error:", err);
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded w-80 space-y-3">
-      <h2 className="text-xl font-bold">Register</h2>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto p-6 border rounded-lg shadow-md">
+      <h2 className="text-xl font-bold">Register (Controlled Form)</h2>
+
+      {error && <p className="text-red-500">{error}</p>}
 
       <input
         type="text"
         name="username"
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="w-full p-2 border rounded"
+        value={formData.username}
+        onChange={handleChange}
+        className="border p-2 rounded"
       />
-      {errors.username && <p className="text-red-500">{errors.username}</p>}
 
       <input
         type="email"
         name="email"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="w-full p-2 border rounded"
+        value={formData.email}
+        onChange={handleChange}
+        className="border p-2 rounded"
       />
-      {errors.email && <p className="text-red-500">{errors.email}</p>}
 
       <input
         type="password"
         name="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full p-2 border rounded"
+        value={formData.password}
+        onChange={handleChange}
+        className="border p-2 rounded"
       />
-      {errors.password && <p className="text-red-500">{errors.password}</p>}
 
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         Register
       </button>
     </form>
