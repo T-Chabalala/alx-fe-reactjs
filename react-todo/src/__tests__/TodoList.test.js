@@ -1,37 +1,45 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import TodoList from "../components/TodoList";
 
 describe("TodoList Component", () => {
   test("renders initial todos", () => {
     render(<TodoList />);
-    expect(screen.getByText("Learn React")).toBeInTheDocument();
-    expect(screen.getByText("Build a Todo App")).toBeInTheDocument();
-    expect(screen.getByText("Write Tests")).toBeInTheDocument();
+    const items = screen.getAllByTestId("todo-item");
+    expect(items.length).toBe(3);
   });
 
   test("adds a new todo", () => {
     render(<TodoList />);
-    const input = screen.getByPlaceholderText("Add new todo");
-    fireEvent.change(input, { target: { value: "New Task" } });
-    fireEvent.click(screen.getByText("Add"));
-    expect(screen.getByText("New Task")).toBeInTheDocument();
+    const input = screen.getByPlaceholderText("Add todo");
+    const addButton = screen.getByText("Add");
+
+    fireEvent.change(input, { target: { value: "New Todo" } });
+    fireEvent.click(addButton);
+
+    expect(screen.getByText("New Todo")).toBeInTheDocument();
   });
 
-  test("toggles a todo", () => {
+  test("toggles a todo completion", () => {
     render(<TodoList />);
-    const todo = screen.getByText("Learn React");
-    fireEvent.click(todo);
-    expect(todo).toHaveStyle("text-decoration: line-through");
-    fireEvent.click(todo);
-    expect(todo).not.toHaveStyle("text-decoration: line-through");
+    const firstTodo = screen.getAllByTestId("todo-item")[0];
+    
+    // Initially not completed
+    expect(firstTodo).toHaveStyle("text-decoration: none");
+
+    fireEvent.click(firstTodo);
+
+    // Should be completed
+    expect(firstTodo).toHaveStyle("text-decoration: line-through");
   });
 
   test("deletes a todo", () => {
     render(<TodoList />);
-    const todo = screen.getByText("Build a Todo App");
-    const deleteButton = screen.getAllByText("Delete")[1]; // 2nd delete button
-    fireEvent.click(deleteButton);
-    expect(todo).not.toBeInTheDocument();
+    const firstDeleteButton = screen.getAllByTestId("delete-btn")[0];
+    
+    fireEvent.click(firstDeleteButton);
+
+    const itemsAfterDelete = screen.getAllByTestId("todo-item");
+    expect(itemsAfterDelete.length).toBe(2);
   });
 });

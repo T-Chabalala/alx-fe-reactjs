@@ -1,17 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Build a Todo App", completed: false },
-    { id: 3, text: "Write Tests", completed: false },
+    { id: 2, text: "Build a Todo App", completed: true },
   ]);
+
   const [newTodo, setNewTodo] = useState("");
 
-  const addTodo = (e) => {
+  const handleAddTodo = (e) => {
     e.preventDefault();
-    if (newTodo.trim() === "") return;
-    setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
+    if (!newTodo.trim()) return;
+    const todo = {
+      id: Date.now(),
+      text: newTodo,
+      completed: false,
+    };
+    setTodos([...todos, todo]);
     setNewTodo("");
   };
 
@@ -30,8 +35,7 @@ const TodoList = () => {
   return (
     <div>
       <h1>Todo List</h1>
-
-      <form onSubmit={addTodo}>
+      <form onSubmit={handleAddTodo}>
         <input
           type="text"
           placeholder="Add new todo"
@@ -50,9 +54,15 @@ const TodoList = () => {
               textDecoration: todo.completed ? "line-through" : "none",
               cursor: "pointer",
             }}
+            data-testid="todo-item"
           >
             {todo.text}
-            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteTodo(todo.id);
+              }}
+            >
               Delete
             </button>
           </li>
