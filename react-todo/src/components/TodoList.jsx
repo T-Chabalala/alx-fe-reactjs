@@ -1,23 +1,19 @@
 import React, { useState } from "react";
 
-const TodoList = () => {
+export default function TodoList() {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Build a Todo App", completed: true },
+    { id: 2, text: "Write tests", completed: false },
+    { id: 3, text: "Build a Todo App", completed: true },
   ]);
 
-  const [newTodo, setNewTodo] = useState("");
-
-  const handleAddTodo = (e) => {
-    e.preventDefault();
-    if (!newTodo.trim()) return;
-    const todo = {
+  const addTodo = (text) => {
+    const newTodo = {
       id: Date.now(),
-      text: newTodo,
+      text,
       completed: false,
     };
-    setTodos([...todos, todo]);
-    setNewTodo("");
+    setTodos([...todos, newTodo]);
   };
 
   const toggleTodo = (id) => {
@@ -35,16 +31,7 @@ const TodoList = () => {
   return (
     <div>
       <h1>Todo List</h1>
-      <form onSubmit={handleAddTodo}>
-        <input
-          type="text"
-          placeholder="Add new todo"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
-
+      <AddTodoForm addTodo={addTodo} />
       <ul>
         {todos.map((todo) => (
           <li
@@ -59,9 +46,10 @@ const TodoList = () => {
             {todo.text}
             <button
               onClick={(e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // prevent toggling
                 deleteTodo(todo.id);
               }}
+              data-testid="delete-btn"
             >
               Delete
             </button>
@@ -70,6 +58,27 @@ const TodoList = () => {
       </ul>
     </div>
   );
-};
+}
 
-export default TodoList;
+function AddTodoForm({ addTodo }) {
+  const [input, setInput] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    addTodo(input);
+    setInput("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Add todo"
+      />
+      <button type="submit">Add</button>
+    </form>
+  );
+}

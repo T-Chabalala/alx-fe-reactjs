@@ -23,7 +23,7 @@ describe("TodoList Component", () => {
   test("toggles a todo completion", () => {
     render(<TodoList />);
     const firstTodo = screen.getAllByTestId("todo-item")[0];
-    
+
     // Initially not completed
     expect(firstTodo).toHaveStyle("text-decoration: none");
 
@@ -36,7 +36,7 @@ describe("TodoList Component", () => {
   test("deletes a todo", () => {
     render(<TodoList />);
     const firstDeleteButton = screen.getAllByTestId("delete-btn")[0];
-    
+
     fireEvent.click(firstDeleteButton);
 
     const itemsAfterDelete = screen.getAllByTestId("todo-item");
