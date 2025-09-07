@@ -6,7 +6,9 @@ import * as Yup from "yup";
 const validationSchema = Yup.object({
   username: Yup.string().required("Username is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
 });
 
 const FormikForm = () => {
@@ -41,21 +43,40 @@ const FormikForm = () => {
           <h2 className="text-xl font-bold">Register (Formik + Yup)</h2>
 
           <div>
-            <Field name="username" type="text" placeholder="Username" className="border p-2 rounded w-full" />
+            <Field
+              name="username"
+              type="text"
+              placeholder="Username"
+              className="border p-2 rounded w-full"
+            />
             <ErrorMessage name="username" component="p" className="text-red-500" />
           </div>
 
           <div>
-            <Field name="email" type="email" placeholder="Email" className="border p-2 rounded w-full" />
+            <Field
+              name="email"
+              type="email"
+              placeholder="Email"
+              className="border p-2 rounded w-full"
+            />
             <ErrorMessage name="email" component="p" className="text-red-500" />
           </div>
 
           <div>
-            <Field name="password" type="password" placeholder="Password" className="border p-2 rounded w-full" />
+            <Field
+              name="password"
+              type="password"
+              placeholder="Password"
+              className="border p-2 rounded w-full"
+            />
             <ErrorMessage name="password" component="p" className="text-red-500" />
           </div>
 
-          <button type="submit" disabled={isSubmitting} className="bg-green-500 text-white p-2 rounded">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-green-500 text-white p-2 rounded"
+          >
             {isSubmitting ? "Registering..." : "Register"}
           </button>
         </Form>
